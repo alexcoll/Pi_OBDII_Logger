@@ -98,8 +98,7 @@ class PiMyRide_Logger():
                 (name, value, unit) = self.port.sensor(index)
                 print self.port.sensor(index)  # print the data provides feedback to user
                 log_data = log_data + "," + str(value)  # add to log string
-                result_set[
-                    obd_sensors.SENSORS[index].shortname] = value  # add data to a result set for more manipulation
+                result_set[obd_sensors.SENSORS[index].shortname] = value
                 # we don't want to log "NODATA" if the car drops the OBDII connection rather exit the program
             if (result_set["rpm"] == "NODATA") or (result_set["speed"] == "NODATA") or (
                     result_set["throttle_pos"] == "NODATA") or (result_set["load"] == "NODATA") or (
