@@ -112,8 +112,9 @@ class PiMyRide_Logger():
                 sys.exit()  # exit the program
             Instant_MPG = self.get_mpg(result_set["speed"], result_set["maf"])  # calculate mpg
             self.lcd.clear()
-            self.lcd.message('MPG ' + '%.2f' % Instant_MPG + '\n')
-            self.lcd.message('RPM ' + str(result_set["rpm"]))
+            # self.lcd.message('MPG ' + '%.2f' % Instant_MPG + '\n')
+            self.lcd.message("Throttle " + str(result_set["throttle_pos"]))
+            self.lcd.message("Load " + str(result_set["load"]))
             log_data = log_data + "," + str(Instant_MPG)  # add mpg to result string
             self.log_csv.write(log_data + "\n")  # write to csv
 
