@@ -44,7 +44,7 @@ class PiMyRide_Logger():
         self.log_csv = open(destination_file, "w", 128)
         self.log_csv.write(
             "Time,RPM,MPH,Throttle-Position,Calculated-Load,"
-            "Coolant-Temp,Air-Temp,Intake-Manifold-Pressure,Air-Flow-Rate,MPG\n")
+            "Coolant-Temp,Air-Temp,Intake-Manifold-Pressure,Air-Flow-Rate,Timing-Advance,Engine-Time,Fuel-Status,Fuel-Rate,Fuel-Pressure,MPG\n")
 
         for sensor in log_sensors:
             self.add_log_sensor(sensor)
@@ -130,7 +130,7 @@ path = datetime.now().strftime('%d-%b-%Y')
 
 ensure_dir("/home/pi/logs/" + path + "/")  # ensure the dir is available
 
-log_sensors = ["rpm", "speed", "throttle_pos", "load", "temp", "intake_air_temp", "manifold_pressure", "maf"]
+log_sensors = ["rpm", "speed", "throttle_pos", "load", "temp", "intake_air_temp", "manifold_pressure", "maf", "timing_advance", "engine_time", "fuel_status", "fuel_rate",  "fuel_pressure"]
 logger = PiMyRide_Logger("/home/pi/logs/" + path + "/", log_sensors)
 logger.connect()
 if not logger.is_connected():
