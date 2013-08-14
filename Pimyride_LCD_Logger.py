@@ -44,7 +44,7 @@ class PiMyRide_Logger():
         self.log_csv = open(destination_file, "w", 128)
         self.log_csv.write(
             "Time,RPM,MPH,Throttle-Position,Calculated-Load,"
-            "Coolant-Temp,Air-Temp,Intake-Manifold-Pressure,Air-Flow-Rate,Timing-Advance,Engine-Time,Fuel-Status,Fuel-Rate,Fuel-Pressure,MPG\n")
+            "Coolant-Temp,Air-Temp,Intake-Manifold-Pressure,Air-Flow-Rate,Engine-Time,MPG\n")
 
         for sensor in log_sensors:
             self.add_log_sensor(sensor)
@@ -113,8 +113,9 @@ class PiMyRide_Logger():
             Instant_MPG = self.get_mpg(result_set["speed"], result_set["maf"])  # calculate mpg
             self.lcd.clear()
             # self.lcd.message('MPG ' + '%.2f' % Instant_MPG + '\n')
-            self.lcd.message("Throttle " + str(result_set["throttle_pos"]))
-            self.lcd.message("Load " + str(result_set["load"]))
+            MSG_LINE1 = "Throttle " + str(round(result_set["throttle_pos"], 2))
+            MSG_LINE2 = "Load " + str(round(result_set["load"], 2)))
+            self.lcd.message(str(MSG_LINE1) + "\n" + str(MSG_LINE2))
             log_data = log_data + "," + str(Instant_MPG)  # add mpg to result string
             self.log_csv.write(log_data + "\n")  # write to csv
 
@@ -130,7 +131,7 @@ path = datetime.now().strftime('%d-%b-%Y')
 
 ensure_dir("/home/pi/logs/" + path + "/")  # ensure the dir is available
 
-log_sensors = ["rpm", "speed", "throttle_pos", "load", "temp", "intake_air_temp", "manifold_pressure", "maf", "timing_advance", "engine_time", "fuel_status", "fuel_rate",  "fuel_pressure"]
+log_sensors = ["rpm", "speed", "throttle_pos", "load", "temp", "intake_air_temp", "manifold_pressure", "maf", "engine_time"]
 logger = PiMyRide_Logger("/home/pi/logs/" + path + "/", log_sensors)
 logger.connect()
 if not logger.is_connected():
