@@ -40,7 +40,7 @@ class PiMyRide_Logger():
         self.lcd = CharLCDPlate()
         self.lcd.begin(16, 1)
         self.sensor_list = []
-        destination_file = path + (datetime.now().strftime('%d%b-%H:%M:%S')) + ".csv"
+        destination_file = path + (datetime.now().strftime('%d%b-%H_%M_%S')) + ".csv"
         self.log_csv = open(destination_file, "w", 128)
         self.log_csv.write(
             "Time,RPM,MPH,Throttle-Position,Calculated-Load,"
@@ -65,6 +65,11 @@ class PiMyRide_Logger():
             self.lcd.clear()
             self.lcd.message("Connected")
             print "Connected"
+        #~ else:
+            #~ self.lcd.clear()
+            #~ self.lcd.message("Not Connected")
+            #~ print "Not Connected"
+            #~ sys.exit()
 
     def is_connected(self):  # check if connected
         return self.port
@@ -74,7 +79,7 @@ class PiMyRide_Logger():
         for index, e in enumerate(obd_sensors.SENSORS):
             if sensor == e.shortname:
                 self.sensor_list.append(index)
-                print "Logging Sensor: " + e.name  # logging this sensor
+               # print "Logging Sensor: " + e.name  # logging this sensor
                 break
 
     def get_mpg(self, MPH, MAF):
@@ -88,7 +93,7 @@ class PiMyRide_Logger():
 
         self.lcd.clear()
         self.lcd.message("Logging started")
-        print "Logging started"
+        # print "Logging started"
 
         while 1:
             log_time = datetime.now().strftime('%d%b-%H:%M:%S.%f')  # today's date and time
@@ -96,7 +101,7 @@ class PiMyRide_Logger():
             result_set = {}
             for index in self.sensor_list:  # log all of our sensors data from sensor_list
                 (name, value, unit) = self.port.sensor(index)
-                print self.port.sensor(index)  # print the data provides feedback to user
+                # print self.port.sensor(index)  # print the data provides feedback to user
                 log_data = log_data + "," + str(value)  # add to log string
                 result_set[
                     obd_sensors.SENSORS[index].shortname] = value  # add data to a result set for more manipulation
@@ -107,14 +112,16 @@ class PiMyRide_Logger():
                     result_set["manifold_pressure"] == "NODATA") or (result_set["maf"] == "NODATA"):
                 self.lcd.clear()
                 self.lcd.message("Connection Error\n Disconnecting")
-                sleep(3)  # show the message
+                sleep(2)  # show the message
                 self.lcd.message("  Disconnected")
+                sleep(2)
+                os.system("cd /home/pi/Documents/dev/lcdmenu && sudo python lcdmenu.py &")
                 sys.exit()  # exit the program
             Instant_MPG = self.get_mpg(result_set["speed"], result_set["maf"])  # calculate mpg
             self.lcd.clear()
             # self.lcd.message('MPG ' + '%.2f' % Instant_MPG + '\n')
             MSG_LINE1 = "Throttle " + str(round(result_set["throttle_pos"], 2))
-            MSG_LINE2 = "Load " + str(round(result_set["load"], 2)))
+            MSG_LINE2 = "Load " + str(round(result_set["load"], 2))
             self.lcd.message(str(MSG_LINE1) + "\n" + str(MSG_LINE2))
             log_data = log_data + "," + str(Instant_MPG)  # add mpg to result string
             self.log_csv.write(log_data + "\n")  # write to csv
@@ -138,8 +145,6 @@ if not logger.is_connected():
     error = CharLCDPlate()
     error.begin(16, 1)
     error.message(" Not connected")
+    os.system("cd /home/pi/Documents/dev/lcdmenu && sudo python lcdmenu.py &")
 logger.record_data()
-
-
-
 
