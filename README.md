@@ -2,11 +2,8 @@
 
 Description goes here.
 
-## Original Project ##
-This project is based off of [Pimyride_Logger](https://github.com/Pimyride-Systems/pimyride_logger) by Alan Kehoe and David O'Regan [www.pimyride.com](www.pimyride.com).
-
 ## License ##
-Copyright (c)2014 alex3yoyo
+Copyright (c) 2014 alex3yoyo
 
 This project is licensed under the [GNU GPL v3](http://www.gnu.org/licenses/gpl-3.0.txt) public license.
 
@@ -22,3 +19,10 @@ This project is licensed under the [GNU GPL v3](http://www.gnu.org/licenses/gpl-
 >
 > You should have received a copy of the GNU General Public License
 > along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+## Attributions ##
+This project is based off of [Pimyride_Logger](https://github.com/Pimyride-Systems/pimyride_logger) by Alan Kehoe and David O'Regan [www.pimyride.com](www.pimyride.com).
+
+This project uses code from [Adafruit's](https://github.com/adafruit) [Adafruit-Raspberry-Pi-Python-Code](https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code) library.
+
+This project uses code from [peterh's](https://github.com/peterh) [pyOBD](https://github.com/peterh/pyobd), which is a fork of [OBDTester.com's](www.obdtester.com) [pyOBD](http://www.obdtester.com/pyobd).
